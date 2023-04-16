@@ -1,0 +1,148 @@
+@use "sass:math";
+
+//<МИКСИНЫ>
+@import "base/mixins";
+//</МИКСИНЫ>
+
+//<ШРИФТЫ>
+//<Подключаем шрифты>
+// @import "fonts/fonts";
+//</Подключаем шрифты>
+
+//<Шрифт по умолчанию>
+$fontFamily: "Georgia";
+$fontSize: rem(14);
+$mainColor: #000;
+//</Шрифт по умолчанию>
+//</ШРИФТЫ>
+
+//<ПЕРЕМЕННЫЕ>
+// Минимальная ширина страницы
+$minWidth: 320;
+// Ширина макета
+$maxWidth: 1280;
+// Ширина ограничивающего контейнера (0 = нет ограничения)
+$maxWidthContainer: 1200;
+// Общий отступ у контейнера
+// (30 = по 15px слева и справа, 0 = нет отступа)
+$containerPadding: 30;
+
+// Ширина срабатывания первого брейкпоинта
+$containerWidth: $maxWidthContainer + $containerPadding;
+// Брейк-поинты
+$pc: em($containerWidth); // ПК, ноутбуки, некоторые планшеты в горизонтальном положении
+$tablet: em(992); // Планшеты, некоторые телефоны в горизонтальном положении
+$mobile: em(768); // Телефоны L
+$mobileSmall: em(480); // Телефоны S
+
+// Тип адаптива 
+// 1 = отзывчивость (у контейнера нет брейкпоинтов),
+// 2 = по брейк-поинтам (контейнер меняет свою ширину по брейк-поинтам)
+$responsiveType: 1;
+//</ПЕРЕМЕННЫЕ>
+
+//<КОНТЕЙНЕР>
+@if ($responsiveType == 1) {
+	// Отзывчивая
+	[class*="__container"] {
+		@if ($maxWidthContainer > 0) {
+			max-width: rem($maxWidthContainer);
+			box-sizing: content-box;
+			margin: 0 auto;
+		}
+		@if ($containerPadding > 0) {
+			padding: 0 rem(math.div($containerPadding, 2));
+
+			@media (max-width: $mobile) {
+				padding: 0 rem(30);
+			}
+
+			@media (max-width: $mobileSmall) {
+				padding: 0 rem(10);
+			}
+		}
+	}
+} @else {
+	// Брейк-поинты
+	[class*="__container"] {
+		margin: 0 auto;
+		@if ($maxWidthContainer > 0) {
+			max-width: rem($maxWidthContainer);
+			box-sizing: content-box;
+		} @else {
+			@if ($containerPadding > 0) {
+				padding: 0 rem(math.div($containerPadding, 2));
+			}
+		}
+		@media (max-width: $pc) {
+			max-width: rem(970);
+		}
+		@media (max-width: $tablet) {
+			max-width: rem(750);
+		}
+		@media (max-width: $mobile) {
+			max-width: none;
+			@if ($containerPadding > 0 and $maxWidthContainer > 0) {
+				padding: 0 rem(math.div($containerPadding, 2));
+			}
+		}
+	}
+}
+//</КОНТЕЙНЕР> 
+
+//<ОБНУЛЕНИЕ, ОБЩИЕ ПАРАМЕТРЫ>
+@import "base/null";
+
+html {
+	scroll-behavior: smooth;
+}
+body {
+	.lock & {
+		overflow: hidden;
+		touch-action: none;
+	}
+}
+//</ОБНУЛЕНИЕ, ОБЩИЕ ПАРАМЕТРЫ>
+
+//<ОБОЛОЧКА>
+.wrapper { 
+	width: 100%;
+	min-height: 100%;
+	overflow: hidden;
+	// Прижимаем footer
+	display: flex;
+	flex-direction: column;
+	> main {
+		flex: 1 1 auto;
+	} 
+}
+
+.blackout {
+	position: fixed;
+	width: 100%;
+	min-height: 100%;
+	top: 0;
+	right: -110%;
+	z-index: 2;
+	background: rgba(41, 41, 41, 0.6);
+
+	&.active {
+		right: 0;
+	}
+}
+//</ОБОЛОЧКА>
+
+//<ПОДЛЮЧЕНИЕ ФАЙЛОВ СТИЛЕЙ СТРАНИЦ И ЭЛЕМЕНТОВ>
+// MAIN
+@import "header";
+@import "main";
+@import "footer";
+//-----------------------------------------------
+// PETS
+@import "header_pets";
+@import "pets";
+//</ПОДЛЮЧЕНИЕ ФАЙЛОВ СТИЛЕЙ СТРАНИЦ И ЭЛЕМЕНТОВ>
+
+//<ПОДКЛЮЧЕНИЕ ФАЙЛОВ UI СТИЛЕЙ, ФОРМ И ГОТОВЫХ КЛАССОВ>
+@import "base";
+//</ПОДКЛЮЧЕНИЕ ФАЙЛОВ UI СТИЛЕЙ, ФОРМ И ГОТОВЫХ КЛАССОВ>

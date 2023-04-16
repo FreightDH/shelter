@@ -1,0 +1,79 @@
+@mixin anim_cubic($time, $delay) {-webkit-transition: all $time cubic-bezier(0.68,-0.55,0.265,1.55) $delay;-moz-transition: all $time cubic-bezier(0.68,-0.55,0.265,1.55) $delay;-ms-transition: all $time cubic-bezier(0.68,-0.55,0.265,1.55) $delay;-o-transition: all $time cubic-bezier(0.68,-0.55,0.265,1.55) $delay;transition: all $time cubic-bezier(0.68,-0.55,0.265,1.55) $delay;}
+@mixin rotate($deg) {-webkit-transform: rotate($deg);-moz-transform: rotate($deg);-ms-transform: rotate($deg);-o-transform: rotate($deg);transform: rotate($deg);}
+@mixin scale($num) {-webkit-transform: scale($num);-moz-transform: scale($num);-ms-transform: scale($num);-o-transform: scale($num);transform: scale($num);}
+@mixin skew($num) {-webkit-transform: skewX($num); -moz-transform: skewX($num);-ms-transform: skewX($num);-o-transform: skewX($num);transform: skewX($num);}
+@mixin cnt($h) {display: flex;flex-direction: column;height: $h;text-align: center;align-items: stretch;justify-content: center;}
+@mixin tr($x, $y, $z) {transform: translate3d($x, $y, $z);}
+
+@function percent($px, $from) {
+	$result: math.div($px, $from) * 100%;
+	@return $result;
+}
+
+@function rem($px) {
+	$result: math.div($px, 16) + rem;
+	@return $result;
+}
+
+@function em($px, $current: 16) {
+	$result: math.div($px, $current) + em;
+	@return $result;
+}
+
+// Адаптивное свойство (clamp)
+@mixin adaptiveValue($property, $startSize, $minSize, $widthFrom: $containerWidth, $widthTo: $minWidth, $keepSize: 0) {
+	@if ($startSize == 0) {
+		$startSize: 0.000001;
+	}
+	@if ($minSize == 0) {
+		$minSize: 0.000001;
+	}
+
+	// Для calc();
+	$addSize: math.div($startSize - $minSize, 16);
+
+	@if ($widthFrom == $containerWidth and $maxWidthContainer == 0) {
+		$widthFrom: $maxWidth;
+	}
+
+	// Брейк-поинты в EM
+	$widthFromMedia: em($widthFrom);
+	$widthToMedia: em($widthTo);
+
+	// Формула плавающего значения
+	// Источник: https://css-tricks.com/linearly-scale-font-size-with-css-clamp-based-on-the-viewport/
+	$slope: math.div(($startSize - $minSize), ($widthFrom - $widthTo));
+	$yIntersection: -$widthTo * $slope + $minSize;
+	@if ($yIntersection == 0) {
+		$yIntersection: 0.000001;
+	}
+	$flyValue: #{rem($yIntersection)}" + " #{$slope * 100}vw;
+
+	// Получение значения свойства
+	$propertyValue: #{"clamp(" rem($minSize) "," $flyValue "," rem($startSize) ")"};
+	// Если отрицательные значения
+	@if ($minSize > $startSize) {
+		$propertyValue: #{"clamp(" rem($startSize) "," $flyValue "," rem($minSize) ")"};
+	}
+
+	// Если поддерживается clamp();
+	@supports (#{$property}: $propertyValue) {
+		#{$property}: $propertyValue;
+	}
+	// Если не поддерживается clamp();
+	@supports not (#{$property}: $propertyValue) {
+		#{$property}: calc(#{rem($minSize)} + #{$addSize} * (100vw - #{rem($widthTo)}) / #{math.div($widthFrom, 16) - math.div($widthTo, 16)});
+	}
+
+	// Устанавливаем значения по умолчанию
+	// @if $widthFrom != $containerWidth and $widthFrom != $maxWidth and $keepSize != 1 and $keepSize != 2 {
+	// 	@media (min-width: $widthFromMedia) {
+	// 		#{$property}: inherit;
+	// 	}
+	// }
+	// @if $widthTo != $minWidth and $keepSize != 1 and $keepSize != 3 {
+	// 	@media (max-width: $widthToMedia) {
+	// 		#{$property}: inherit;
+	// 	}
+	// }
+}

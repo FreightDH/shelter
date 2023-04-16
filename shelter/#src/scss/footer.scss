@@ -1,0 +1,122 @@
+.footer {
+	padding: 40px 0px 0px 0px;
+	@include adaptiveValue("padding-top", 40, 30, 1280, 767);
+	background: url('@img/main/background.jpg') 0 0/100% 100% no-repeat;
+
+	@media (max-width: 48em) {
+		padding: 30px 0px 0px 0px;
+	}
+
+	&__container {
+	}
+
+	&__body {
+		display: flex;
+		justify-content: space-between;
+		
+		@media (max-width: $tablet) {
+			flex-wrap: wrap;
+			justify-content: center;
+
+			margin: 0 -30px;
+		}
+
+		@media (max-width: 767px) {
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+		}
+	}
+
+	&__column {
+		&:not(:last-child) { 
+			padding: 15px 0px 0px 0px;
+
+			@media (max-width: $tablet) {
+				padding: 0 30px;
+			} 
+		}
+
+		&:last-child {
+			@media (max-width: $tablet) {
+				padding: 65px 0px 0px 0px;
+				@include adaptiveValue("padding-top", 65, 0, 769, 320);
+			}
+		}
+
+		@media (max-width: 767px) {
+			&:not(:last-child) { margin-bottom: 40px; }
+			
+			&:nth-child(2) {
+				.footer__item {
+					align-self: flex-start;
+				}
+			}
+		}
+	}
+
+	&__content {
+		@media (max-width: 767px) {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+		}
+	}
+
+	&__title {
+		max-width: 280px;
+
+		color: #FFFFFF;
+		@include adaptiveValue("font-size", 35, 25, 768, 320);
+		@media (min-width: $mobile) { font-size: rem(35); }
+		line-height: 130%;
+		letter-spacing: 0.06em;
+
+		@media (max-width: 767px) {
+			text-align: center;
+		}
+	}
+
+	&__item {
+		display: flex;
+		align-items: center;
+
+		&:nth-child(even) {
+			padding: 40px 0;
+		}
+
+		&.item--padding{
+			padding: 35px 0;
+
+			@media (max-width: 767px) {
+				padding: 40px 0;
+			}
+		}
+	}
+
+	&__icon {
+	}
+
+	&__text {
+		max-width: 260px;
+		margin: 0px 0px 0px 20px;
+
+		color: #F1CDB3;
+		font-size: rem(20);
+		line-height: 115%;
+		letter-spacing: 0.06em;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+
+	&__image {
+		img {
+			@include adaptiveValue("width", 300, 260, 767.98, 320);
+			@include adaptiveValue("height", 310, 269, 767.98, 320);
+			@media (min-width: 768px) { width: 300px; height: 310px; }
+		}
+	}
+}

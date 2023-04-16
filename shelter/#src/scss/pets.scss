@@ -1,0 +1,143 @@
+.container--pets {
+	max-width: 1240px;
+}
+.content--pets {
+	@include adaptiveValue("padding-top", 60, 30, 1280, 767);	
+	@include adaptiveValue("padding-bottom", 60, 42, 1280, 767);
+	@media (max-width: 48em) {
+		@include adaptiveValue("padding-top", 30, 42, 767.98, 320);
+		@include adaptiveValue("padding-bottom", 42, 20, 767.98, 320);
+	}
+
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	margin: 0px -20px;
+}
+.column--pets {
+	flex: 0 0 25%;
+	padding: 0px 20px;
+
+	&:nth-child(1), &:nth-child(2), &:nth-child(3), &:nth-child(4) {
+		margin: 0px 0px 30px 0px;
+	}
+
+	@media (max-width: 1269px) {		
+		&:nth-child(4) {
+			margin: 0px 0px 0px 0px;
+		}
+		
+		&:nth-child(7), &:nth-child(8) {
+			display: none;
+		}
+	}
+
+	@media (max-width: 960px) {
+		&:nth-child(3), &:nth-child(4) {
+			margin: 0px 0px 30px 0px;
+		}
+	}
+
+	@media (max-width: 767px) {
+		&:nth-child(4), &:nth-child(5), &:nth-child(6) {
+			display: none;
+		}
+	}
+}
+.pets--pets {
+	@include adaptiveValue("padding-bottom", 100, 75, 1280, 767);
+	@media (max-width: 48em) {
+		@include adaptiveValue("padding-bottom", 75, 42, 767.98, 320);
+	}
+}
+
+.pets {
+
+	&__pagination {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+
+		padding: 5px 0px 0px 0px;
+		margin: 0 -10px;
+
+		@media (max-width: 767px) {
+			@include adaptiveValue("margin-left", -10, -5, 767.98, 320);
+			@include adaptiveValue("margin-right", -10, -5, 767.98, 320);
+		}
+
+		@media (max-width: 767px) {
+			padding: 0px 0px 0px 0px;
+		}
+	}
+}
+
+.pagination {
+
+	&__column {
+		padding: 0 10px;
+
+		@media (max-width: 767px) {
+			@include adaptiveValue("padding-left", 10, 5, 767.98, 320);
+			@include adaptiveValue("padding-right", 10, 5, 767.98, 320);
+		}
+	}
+
+	&__arrow {
+		width: 50px;
+		height: 50px;
+
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		text-align: center;
+      font-size: 20px;
+      line-height: 115%;
+      letter-spacing: 0.06em;
+
+		border: 2px solid #F1CDB3;
+		border-radius: 50%;
+		transition: all 0.3s ease 0s;
+
+		cursor: pointer;
+		user-select: none;
+		
+		@media (pointer: fine) {
+			&:hover {
+				background-color: #F1CDB3;
+				transition: .3s;
+			}
+		}
+
+		&.disabled {
+			pointer-events: none;
+			color: #CDCDCD;
+			border-color: #CDCDCD;
+
+			cursor: default;
+
+			&:hover {
+				background-color: transparent;
+			}
+		}
+	}
+
+	&__current {
+		width: 50px;
+		height: 50px;
+
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		background-color: #F1CDB3;
+		border: 2px solid #F1CDB3; 
+		border-radius: 50%;
+
+		color: #292929;
+		font-size: rem(20);
+		line-height: 115%;
+		letter-spacing: 0.06em;
+	}
+}

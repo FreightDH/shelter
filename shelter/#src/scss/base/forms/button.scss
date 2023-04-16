@@ -1,0 +1,33 @@
+// <BUTTON>
+// Snippet code "a.btn"
+.btn {
+	display: inline-block;
+	padding: 0px 45px;
+	height: 50px;
+	background-color: #F1CDB3;
+	border-radius: 100px;
+
+
+	color: #292929;
+	font-size: rem(17);
+	line-height: 3.125rem;
+	letter-spacing: 0.06em;
+	
+	transition: all 0.3s ease 0s;
+
+	&:hover {
+		background-color: #FDDCC4;
+	}
+
+	&--w {
+		border: 2px solid #FDDCC4;
+		background-color: #FAFAFA;
+
+		line-height: 3rem;
+	}
+
+	&.fw {
+		width: 100%;
+	}
+}
+// </BUTTON>
