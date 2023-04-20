@@ -1,6 +1,7 @@
 ## Project "Shelter"
 ### Features
 - Burger menu;
+- Popup cards;
 - Slider carousel (main page);
 - Pagination (pets page). 
   
