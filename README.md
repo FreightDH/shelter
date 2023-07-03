@@ -1,4 +1,10 @@
 ## Project "Shelter"
+### Tech stack
+- HTML
+- SCSS
+- Javascript
+- Gulp & Webpack
+
 ### Features
 - Burger menu;
 - Popup cards;
